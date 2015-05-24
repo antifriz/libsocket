@@ -1,7 +1,7 @@
 //
 // Created by ivan on 5/21/15.
 //
-#include "IWCxx/serialization/Serialization.h"
+#include "libsocket/serialization/Serialization.h"
 #include <assert.h>
 
 #include <ctype.h>
@@ -11,7 +11,7 @@
 
 #include <vector>
 #include <string>
-#include <IWCxx/serialization/SerializationException.h>
+#include <libsocket/serialization/SerializationException.h>
 #include <algorithm>
 void Serialization::pack(Bytes& bytes, const char *format, ...) {
     va_list ap;

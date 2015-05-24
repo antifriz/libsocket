@@ -2,8 +2,8 @@
 // Created by ivan on 5/22/15.
 //
 
-#include <IWCxx/socket/Getaddrinfo.h>
-#include <IWCxx/socket/SocketException.h>
+#include <libsocket/socket/Getaddrinfo.h>
+#include <libsocket/socket/SocketException.h>
 #include <assert.h>
 
 Getaddrinfo  Getaddrinfo::from_hints(int ai_family, int ai_socktype, int ai_flags) {

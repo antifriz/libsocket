@@ -2,13 +2,13 @@
 // Created by ivan on 5/23/15.
 //
 
-#include "IWCxx/server/UDPServer.h"
-#include <IWCxx/server/UDPProcessor.h>
+#include "libsocket/server/UDPServer.h"
+#include <libsocket/server/UDPProcessor.h>
 
-#include <IWCxx/core/network_typedefs.h>
-#include <IWCxx/socket/SocketAddr.h>
-#include <IWCxx/socket/SocketException.h>
-#include <IWCxx/server/Server.h>
+#include <libsocket/core/network_typedefs.h>
+#include <libsocket/socket/SocketAddr.h>
+#include <libsocket/socket/SocketException.h>
+#include <libsocket/server/Server.h>
 #include <iostream>
 
 

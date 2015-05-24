@@ -2,12 +2,12 @@
 // Created by ivan on 5/22/15.
 //
 
-#include <IWCxx/socket/Socket.h>
-#include <IWCxx/socket/SocketException.h>
+#include <libsocket/socket/Socket.h>
+#include <libsocket/socket/SocketException.h>
 #include <errno.h>
 #include <unistd.h>
 #include <netdb.h>
-#include <IWCxx/socket/Getaddrinfo.h>
+#include <libsocket/socket/Getaddrinfo.h>
 // Implementation of the Socket class.
 
 
