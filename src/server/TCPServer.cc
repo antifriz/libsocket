@@ -5,7 +5,8 @@
 #include <IWCxx/server/TCPServer.h>
 #include <mystl/signal_handlers.h>
 
-TCPServer::TCPServer(char *port, int ai_family, int backlog) : Server(port, true, ai_family, backlog) {
+TCPServer::TCPServer(std::string port, int ai_family, int backlog) : Server(port, true, ai_family, backlog) {
+
 }
 
 void TCPServer::await_clients(TCPProcessor * processor) {
@@ -21,7 +22,7 @@ void TCPServer::await_clients(TCPProcessor * processor) {
                 SocketAddr client;
                 this->socket().accept(&new_socket,&client);
 
-                processor->delegate_request(new_socket,client);
+                processor->delegate_request(this,&new_socket,client);
             } catch (SocketException &s) {
                 s.append_msg("TCPServer::await_clients");
                 //std::cout<<s.c_str()<<std::endl;

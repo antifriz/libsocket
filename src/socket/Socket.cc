@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <netdb.h>
 #include <IWCxx/socket/Getaddrinfo.h>
+#include <fstream>
 // Implementation of the Socket class.
 
 
@@ -79,7 +80,7 @@ Socket  Socket::fill_from_addrinfo(struct addrinfo *obj) {
     return s;
 }
 
-Socket  Socket::create(const char * address, std::string port, bool isTCP, int ai_family) {
+Socket  Socket::create(const char *address, std::string port, bool isTCP, int ai_family) {
     Getaddrinfo gai = Getaddrinfo::from_hints(ai_family, isTCP ? SOCK_STREAM : SOCK_DGRAM, AI_PASSIVE);
     gai.run(address, port);
 
@@ -95,8 +96,9 @@ Socket  Socket::create(const char * address, std::string port, bool isTCP, int a
     throw SocketException(-1, "Socket::create");
 }
 
- Socket::~Socket() {
-    close();
+Socket::~Socket() {
+    if (is_valid_fd())
+        close();
 }
 
 int  Socket::socket(int domain, int type, int protocol) {
@@ -109,7 +111,8 @@ int  Socket::socket(int domain, int type, int protocol) {
 
 void Socket::close() const {
     errno = 0;
-    int status = ::close(sockfd_);
+    int sfd = sockfd_;
+    int status = ::close(sfd);
     if (status < 0)
         throw SocketException(errno, "Socket::close");
 }
@@ -128,7 +131,7 @@ void Socket::listen(int backlog) {
         throw SocketException(errno, "Socket::listen");
 }
 
-void Socket::accept(Socket * new_socket, SocketAddr * client) {
+void Socket::accept(Socket *new_socket, SocketAddr *client) const {
     errno = 0;
     struct sockaddr_storage their_addr;
     socklen_t their_size = sizeof(their_addr);
@@ -139,11 +142,11 @@ void Socket::accept(Socket * new_socket, SocketAddr * client) {
 
     allow_reuse_address();
 
-    *new_socket = Socket(status);
-    *client = SocketAddr(their_addr, their_size));
+    new_socket->set_sockfd(status);
+    *client = SocketAddr(their_addr, their_size);
 }
 
-void Socket::connect(const SocketAddr & sadr) const {
+void Socket::connect(const SocketAddr &sadr) const {
     errno = 0;
     int status = ::connect(sockfd_, sadr.sockaddr_ptr(), sadr.saslen());
     if (status < 0)
@@ -157,16 +160,42 @@ ssize_t Socket::send(const Bytes &bytes) const {
     return status;
 }
 
-bool Socket::sendAll(const Bytes &bytes) const {
+bool Socket::send_all(const Bytes &bytes) const {
     size_t offset = 0;
     while (offset != bytes.size()) {
-        ssize_t sent = send(Bytes(bytes.begin() + offset, bytes.end()));
+        ssize_t sent;
+        try {
+            sent = send(Bytes(bytes.begin() + offset, bytes.end()));
+        } catch (SocketException &e) {
+            e.append_msg("Socket::send_all");
+            throw;
+        }
         if (sent == 0)
-            return false;
+            break;
         offset += sent;
     }
     return true;
 }
+
+void Socket::send_file(const std::string &file_name) const {
+    std::ifstream file(file_name.c_str());
+    if (!file)
+        throw SocketException(EIO, "Socket::send_file");
+    file.seekg(0, std::ios::end);
+    std::streampos length = file.tellg();
+    file.seekg(0, std::ios::beg);
+
+    Bytes bytes((unsigned long) length);
+    file.read((char *) bytes.data(), length);
+
+    try {
+        send_all(bytes);
+    }
+    catch(SocketException &e){
+        e.append_msg("Socket::send_file");
+    }
+}
+
 
 ssize_t Socket::send_to(const Bytes &bytes, const SocketAddr &client) const {
     ssize_t status = ::sendto(sockfd_, bytes.data(), bytes.size(), 0, client.sockaddr_ptr(), client.saslen());
@@ -190,7 +219,7 @@ Bytes Socket::recv_from(SocketAddr &client) const {
     struct sockaddr_storage addr;
     socklen_t addr_len = sizeof addr;
     errno = 0;
-    ssize_t status = ::recvfrom(sockfd_, buffer, MAX_BUFFER_SIZE-1, 0, (sockaddr *) &addr, &addr_len);
+    ssize_t status = ::recvfrom(sockfd_, buffer, MAX_BUFFER_SIZE - 1, 0, (sockaddr *) &addr, &addr_len);
     if (status < 0)
         throw SocketException(errno, "Socket::recv_from");
 
@@ -198,7 +227,7 @@ Bytes Socket::recv_from(SocketAddr &client) const {
     return Bytes(buffer, buffer + status);
 }
 
-void Socket::allow_reuse_address() {
+void Socket::allow_reuse_address() const {
     int yes = 1;
     int status = setsockopt(sockfd_, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));
     if (status < 0)
@@ -216,7 +245,12 @@ bool Socket::can_read(long max_wait_sec, long max_wait_usec) const {
     FD_SET(sockfd(), &readfds);
 
     // don't care about writefds and exceptfds:
-    select(sockfd()+1, &readfds, NULL, NULL, &tv);
+    select(sockfd() + 1, &readfds, NULL, NULL, &tv);
 
     return FD_ISSET(sockfd(), &readfds);
+}
+
+void Socket::set_sockfd(int sockfd) {
+    sockfd_ = sockfd;
+    is_valid_fd_ = true;
 }

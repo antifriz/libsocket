@@ -7,23 +7,27 @@
 
 #include "Server.h"
 
+class TCPProcessor;
 
 class TCPServer : public Server {
 private:
 public:
-    TCPServer(char *port, int ai_family, int backlog);
+    TCPServer(std::string port, int ai_family, int backlog);
 
-    static TCPServer createIPv4(std::string port) {
-        return TCPServer(port, AF_INET);
+    static TCPServer createIPv4(std::string port,int backlog) {
+        return TCPServer(port, AF_INET,backlog);
     }
 
-    static TCPServer createIPv6(std::string port) {
-        return TCPServer(port, AF_INET6);
+    static TCPServer createIPv6(std::string port,int backlog) {
+        return TCPServer(port, AF_INET6,backlog);
     }
 
     void await_clients(TCPProcessor * processor);
 
+
+
 };
+#include "TCPProcessor.h"
 
 
 #endif //ZAVRSNI_TCPSERVER_H

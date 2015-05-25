@@ -17,10 +17,13 @@
 
 class Socket {
 public:
-    Socket(int sockfd, const SocketAddr &socket_addr) : sockfd_(sockfd), socket_addr_(socket_addr) { }
-    Socket(int sockfd) : sockfd_(sockfd) { }
+    Socket(int sockfd, const SocketAddr &socket_addr) : sockfd_(sockfd), socket_addr_(socket_addr),is_valid_fd_(true) { }
+    Socket(int sockfd) : sockfd_(sockfd),is_valid_fd_(true) { }
+    Socket() :sockfd_(-1),is_valid_fd_(false) { }
 
     virtual ~Socket();
+
+    bool is_valid_fd(){ return is_valid_fd_;}
 
 
     static Socket fill_from_addrinfo(struct addrinfo *obj);
@@ -35,7 +38,7 @@ public:
 
     void listen(int backlog);
 
-    void accept(Socket * new_socket, SocketAddr * client);
+    void accept(Socket * new_socket, SocketAddr * client) const;
 
 
     void connect(const SocketAddr & sadr) const;
@@ -43,7 +46,9 @@ public:
 
     ssize_t send(const Bytes &bytes) const;
 
-    bool sendAll(const Bytes &bytes) const;
+    bool send_all(const Bytes &bytes) const;
+
+    void send_file(const std::string & file_name) const;
 
     ssize_t send_to(const Bytes &bytes, const SocketAddr &client) const;
 
@@ -54,7 +59,7 @@ public:
 
     bool can_read(long max_wait_sec=0, long max_wait_usec=0) const;
 
-    void allow_reuse_address();
+    void allow_reuse_address() const;
 
     //void set_non_blocking(const bool);
 
@@ -62,9 +67,12 @@ public:
 
     int sockfd() const {return sockfd_;}
 
+    void set_sockfd(int sockfd);
+
 private:
     int sockfd_;
     SocketAddr socket_addr_;
+    bool is_valid_fd_;
 
 };
 

@@ -2,32 +2,34 @@
 // Created by ivan on 5/23/15.
 //
 
-#ifndef ZAVRSNI_UDPPROCESSOR_H
-#define ZAVRSNI_UDPPROCESSOR_H
+#ifndef ZAVRSNI_TCPPROCESSOR_H
+#define ZAVRSNI_TCPPROCESSOR_H
 
 
-#include "TCPServer.h"
-
+#include <IWCxx/socket/Socket.h>
 class TCPServer;
 
 class TCPProcessor {
 
 public:
-    void delegate_request(TCPServer * server, SocketAddr addr);
+    void delegate_request(TCPServer *server, Socket *socket, SocketAddr addr);
 
-    TCPServer *server() { return server_; }
+    inline Socket *socket() { return socket_; }
 
-    SocketAddr client() const {
-        return client_;
-    }
+    inline TCPServer *server() { return server_; }
+
+    inline SocketAddr client() const { return client_; }
+
 protected:
 
     virtual void process_request() = 0;
 
 private:
-    TCPServer * server_;
+    Socket *socket_;
+    TCPServer *server_;
     SocketAddr client_;
 };
+#include "TCPServer.h"
 
 
 #endif //ZAVRSNI_UDPPROCESSOR_H

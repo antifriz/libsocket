@@ -7,8 +7,9 @@
 #include <IWCxx/socket/SocketAddr.h>
 
 
-void  TCPProcessor::delegate_request(TCPServer * server, SocketAddr addr) {
-    server_ = server;
+void  TCPProcessor::delegate_request(TCPServer * server,Socket * socket, SocketAddr addr) {
+    socket_ = socket;
+    server_=server;
     client_ = addr;
     process_request();
 }

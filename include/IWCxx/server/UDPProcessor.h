@@ -5,8 +5,8 @@
 #ifndef ZAVRSNI_UDPPROCESSOR_H
 #define ZAVRSNI_UDPPROCESSOR_H
 
-
-#include "UDPServer.h"
+#include <IWCxx/core/network_typedefs.h>
+#include <IWCxx/socket/SocketAddr.h>
 
 class UDPServer;
 
@@ -18,11 +18,11 @@ public:
 
     UDPServer *server() { return server_; }
 
-    SocketAddr client() const {
+    inline SocketAddr client() const {
         return client_;
     }
 
-    Bytes received_bytes() const {
+    inline Bytes received_bytes() const {
         return received_bytes_;
     }
 protected:
@@ -36,6 +36,8 @@ private:
 
 
 };
+#include "UDPServer.h"
+
 
 
 #endif //ZAVRSNI_UDPPROCESSOR_H

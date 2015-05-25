@@ -10,14 +10,14 @@
 #include <IWCxx/socket/SocketException.h>
 #include <IWCxx/socket/Socket.h>
 #include <mystl/random.h>
-
+#include <unistd.h>
 #define MAX_FREE_PORT 65535
 #define MIN_FREE_PORT 1024
 
 class Server {
 public:
     Server(std::string port, bool isTCP, int ai_family, int backlog) try : socket_(
-            Socket::create(NULL, port, isTCP, ai_family)) {
+            Socket::create(NULL, port, isTCP, ai_family)),pid_(getpid()) {
         socket_.bind();
         if (isTCP) socket_.listen(backlog);
     } catch (SocketException &s) {
@@ -25,34 +25,35 @@ public:
         throw;
     }
 
-    ssize_t send(const Bytes &bytes) const {
+    inline ssize_t send(const Bytes &bytes) const {
         return socket().send(bytes);
     }
 
-    bool sendAll(const Bytes &bytes) const {
-        return socket().sendAll(bytes);
+    inline bool send_all(const Bytes &bytes) const {
+        return socket().send_all(bytes);
     }
 
-    Bytes recv() const {
+    inline Bytes recv() const {
         return socket().recv();
     }
+    inline int pid(){
+        return pid_;
+    }
 
 
+    inline void update_pid(){
+        pid_= getpid();
+    }
 
-    const Socket &socket() const {
+    inline const Socket &socket() const {
         return socket_;
     }
 
-    static std::string generate_random_free_port() {
-        uint16_t a = mystd::random<uint16_t>(MIN_FREE_PORT,MAX_FREE_PORT);
-        std::stringstream ss;
-        ss << a;
-        return ss.str();
-    }
+    static std::string generate_random_free_port();
 
 private:
     Socket socket_;
-
+    int pid_;
 };
 
 
