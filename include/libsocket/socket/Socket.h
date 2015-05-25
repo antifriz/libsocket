@@ -41,7 +41,8 @@ public:
     void accept(Socket * new_socket, SocketAddr * client) const;
 
 
-    void connect(const SocketAddr & sadr) const;
+    void connect() const;
+    void connect(const SocketAddr & sas) const;
 
 
     ssize_t send(const Bytes &bytes) const;

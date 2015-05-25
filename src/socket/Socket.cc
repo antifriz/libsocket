@@ -147,8 +147,12 @@ void Socket::accept(Socket *new_socket, SocketAddr *client) const {
 }
 
 void Socket::connect() const {
+    connect(socket_addr_);
+}
+
+void Socket::connect(const SocketAddr & sas) const {
     errno = 0;
-    int status = ::connect(sockfd_, socket_addr_.sockaddr_ptr(), socket_addr_.saslen());
+    int status = ::connect(sockfd_, sas.sockaddr_ptr(), sas.saslen());
     if (status < 0)
         throw SocketException(errno, "Socket::connect");
 }

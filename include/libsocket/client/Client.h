@@ -15,7 +15,7 @@
 class Client {
 public:
     Client(std::string address,std::string port, bool isTCP, int ai_family) try : socket_(
-            Socket::create(address, port, isTCP, ai_family)),pid_(getpid()) {
+            Socket::create(address.c_str(), port, isTCP, ai_family)),pid_(getpid()) {
         socket_.bind();
         socket_.connect();
     } catch (SocketException &s) {
