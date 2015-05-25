@@ -1,0 +1,3 @@
+[submodule "external-deps/mystl"]
+	path = external-deps/mystl
+	url = git@github.com:antifriz/mystl.git
