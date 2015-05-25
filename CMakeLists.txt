@@ -6,15 +6,16 @@ src/serialization/*.cc
 src/server/*.cc
 src/socket/*.cc
 src/core/*.cc
+src/client/*.cc
 )
 
 include_directories(
 include
-../mystl/include
+external-deps/mystl/include
 )
 
 set(CMAKE_CXX_COMPILER g++)
 
 
-add_library(InetWrappersCxx STATIC ${SOURCE_FILES})
-target_link_libraries(InetWrappersCxx mystl)
+add_library(libsocket STATIC ${SOURCE_FILES})
+target_link_libraries(libsocket mystl)

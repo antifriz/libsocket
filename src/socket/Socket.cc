@@ -146,14 +146,15 @@ void Socket::accept(Socket *new_socket, SocketAddr *client) const {
     *client = SocketAddr(their_addr, their_size);
 }
 
-void Socket::connect(const SocketAddr &sadr) const {
+void Socket::connect() const {
     errno = 0;
-    int status = ::connect(sockfd_, sadr.sockaddr_ptr(), sadr.saslen());
+    int status = ::connect(sockfd_, socket_addr_.sockaddr_ptr(), socket_addr_.saslen());
     if (status < 0)
         throw SocketException(errno, "Socket::connect");
 }
 
 ssize_t Socket::send(const Bytes &bytes) const {
+    errno = 0;
     ssize_t status = ::send(sockfd_, bytes.data(), bytes.size(), 0);
     if (status < 0)
         throw SocketException(errno, "Socket::send");
@@ -165,7 +166,8 @@ bool Socket::send_all(const Bytes &bytes) const {
     while (offset != bytes.size()) {
         ssize_t sent;
         try {
-            sent = send(Bytes(bytes.begin() + offset, bytes.end()));
+            Bytes off_bytes = Bytes(bytes.begin() + offset, bytes.end());
+            sent = send(off_bytes);
         } catch (SocketException &e) {
             e.append_msg("Socket::send_all");
             throw;

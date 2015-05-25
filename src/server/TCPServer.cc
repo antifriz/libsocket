@@ -3,7 +3,6 @@
 //
 
 
-
 #include <libsocket/server/TCPServer.h>
 #include <mystl/signal_handlers.h>
 
@@ -12,24 +11,24 @@ TCPServer::TCPServer(std::string port, int ai_family, int backlog) : Server(port
 }
 
 void TCPServer::await_clients(TCPProcessor * processor) {
-        try{
-            mystd::reap_dead_processes();
-        }
-        catch(mystd::signal_handlers_exception &e){
-        }
-        while (true) {
-            try {
+    try{
+        mystd::reap_dead_processes();
+    }
+    catch(mystd::signal_handlers_exception &e){
+    }
+    while (true) {
+        try {
 
-                Socket new_socket;
-                SocketAddr client;
-                this->socket().accept(&new_socket,&client);
+            Socket new_socket;
+            SocketAddr client;
+            this->socket().accept(&new_socket,&client);
 
-                processor->delegate_request(this,&new_socket,client);
-            } catch (SocketException &s) {
-                s.append_msg("TCPServer::await_clients");
-                //std::cout<<s.c_str()<<std::endl;
-                exit(s.err_num());
-                //throw;
-            }
+            processor->delegate_request(this,&new_socket,client);
+        } catch (SocketException &s) {
+            s.append_msg("TCPServer::await_clients");
+            //std::cout<<s.c_str()<<std::endl;
+            exit(s.err_num());
+            //throw;
         }
     }
+}

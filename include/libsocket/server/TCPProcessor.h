@@ -6,7 +6,7 @@
 #define ZAVRSNI_TCPPROCESSOR_H
 
 
-#include <IWCxx/socket/Socket.h>
+#include <libsocket/socket/Socket.h>
 class TCPServer;
 
 class TCPProcessor {

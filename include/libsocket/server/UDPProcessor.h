@@ -5,8 +5,8 @@
 #ifndef ZAVRSNI_UDPPROCESSOR_H
 #define ZAVRSNI_UDPPROCESSOR_H
 
-#include <IWCxx/core/network_typedefs.h>
-#include <IWCxx/socket/SocketAddr.h>
+#include <libsocket/core/network_typedefs.h>
+#include <libsocket/socket/SocketAddr.h>
 
 class UDPServer;
 
