@@ -128,7 +128,7 @@ void Socket::listen(int backlog) {
         throw SocketException(errno, "Socket::listen");
 }
 
-Socket Socket::accept() {
+void Socket::accept(Socket * new_socket, SocketAddr * client) {
     errno = 0;
     struct sockaddr_storage their_addr;
     socklen_t their_size = sizeof(their_addr);
@@ -139,7 +139,8 @@ Socket Socket::accept() {
 
     allow_reuse_address();
 
-    return Socket(status, SocketAddr(their_addr, their_size));
+    *new_socket = Socket(status);
+    *client = SocketAddr(their_addr, their_size));
 }
 
 void Socket::connect(const SocketAddr & sadr) const {

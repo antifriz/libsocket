@@ -18,6 +18,7 @@
 class Socket {
 public:
     Socket(int sockfd, const SocketAddr &socket_addr) : sockfd_(sockfd), socket_addr_(socket_addr) { }
+    Socket(int sockfd) : sockfd_(sockfd) { }
 
     virtual ~Socket();
 
@@ -34,7 +35,7 @@ public:
 
     void listen(int backlog);
 
-    Socket accept();
+    void accept(Socket * new_socket, SocketAddr * client);
 
 
     void connect(const SocketAddr & sadr) const;

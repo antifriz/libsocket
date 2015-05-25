@@ -7,11 +7,21 @@
 
 #include "Server.h"
 
+
 class TCPServer : public Server {
 private:
 public:
     TCPServer(char *port, int ai_family, int backlog);
 
+    static TCPServer createIPv4(std::string port) {
+        return TCPServer(port, AF_INET);
+    }
+
+    static TCPServer createIPv6(std::string port) {
+        return TCPServer(port, AF_INET6);
+    }
+
+    void await_clients(TCPProcessor * processor);
 
 };
 
