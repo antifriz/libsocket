@@ -8,7 +8,6 @@
 #include <memory>
 #include <string>
 #include "Server.h"
-#include "UDPProcessor.h"
 
 class UDPProcessor;
 class UDPServer : public Server {
@@ -34,6 +33,7 @@ public:
     void await_clients(UDPProcessor * processor);
 
 };
+#include "UDPProcessor.h"
 
 
 #endif //ZAVRSNI_UDPSERVER_H

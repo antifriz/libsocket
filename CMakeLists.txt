@@ -17,4 +17,4 @@ set(CMAKE_CXX_COMPILER g++)
 
 
 add_library(InetWrappersCxx STATIC ${SOURCE_FILES})
-target_link_libraries(InetWrappersCxx  mystl)
+target_link_libraries(InetWrappersCxx mystl)
