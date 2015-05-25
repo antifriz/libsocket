@@ -2,8 +2,8 @@
 // Created by ivan on 5/23/15.
 //
 
-#ifndef ZAVRSNI_UDPSERVER_H
-#define ZAVRSNI_UDPSERVER_H
+#ifndef _LIBSOCKET_UDPSERVER_H
+#define _LIBSOCKET_UDPSERVER_H
 
 #include <memory>
 #include <string>
@@ -36,4 +36,4 @@ public:
 #include "UDPProcessor.h"
 
 
-#endif //ZAVRSNI_UDPSERVER_H
+#endif //_LIBSOCKET_UDPSERVER_H

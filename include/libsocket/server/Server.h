@@ -2,8 +2,8 @@
 // Created by ivan on 5/22/15.
 //
 
-#ifndef ZAVRSNI_SERVER_H
-#define ZAVRSNI_SERVER_H
+#ifndef _LIBSOCKET_SERVER_H
+#define _LIBSOCKET_SERVER_H
 
 #include <sstream>
 #include <stdlib.h>
@@ -57,4 +57,4 @@ private:
 };
 
 
-#endif //ZAVRSNI_SERVER_H
+#endif //_LIBSOCKET_SERVER_H

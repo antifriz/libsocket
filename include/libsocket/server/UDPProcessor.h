@@ -2,11 +2,11 @@
 // Created by ivan on 5/23/15.
 //
 
-#ifndef ZAVRSNI_UDPPROCESSOR_H
-#define ZAVRSNI_UDPPROCESSOR_H
+#ifndef _LIBSOCKET_UDPPROCESSOR_H
+#define _LIBSOCKET_UDPPROCESSOR_H
 
-#include <IWCxx/core/network_typedefs.h>
-#include <IWCxx/socket/SocketAddr.h>
+#include <libsocket/core/network_typedefs.h>
+#include <libsocket/socket/SocketAddr.h>
 
 class UDPServer;
 
@@ -40,4 +40,4 @@ private:
 
 
 
-#endif //ZAVRSNI_UDPPROCESSOR_H
+#endif //_LIBSOCKET_UDPPROCESSOR_H

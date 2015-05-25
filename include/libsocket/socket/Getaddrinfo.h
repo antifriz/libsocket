@@ -2,8 +2,8 @@
 // Created by ivan on 5/22/15.
 //
 
-#ifndef ZAVRSNI_GETADDRINFO_H
-#define ZAVRSNI_GETADDRINFO_H
+#ifndef _LIBSOCKET_GETADDRINFO_H
+#define _LIBSOCKET_GETADDRINFO_H
 
 #include <string.h>
 #include <netdb.h>
@@ -31,4 +31,4 @@ private:
     bool is_valid;
 };
 
-#endif //ZAVRSNI_GETADDRINFO_H
+#endif //_LIBSOCKET_GETADDRINFO_H

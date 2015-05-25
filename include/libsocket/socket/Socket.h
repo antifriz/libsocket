@@ -2,8 +2,8 @@
 // Created by ivan on 5/22/15.
 //
 
-#ifndef ZAVRSNI_SOCKET_H
-#define ZAVRSNI_SOCKET_H
+#ifndef _LIBSOCKET_SOCKET_H
+#define _LIBSOCKET_SOCKET_H
 // Definition of the Socket class
 
 

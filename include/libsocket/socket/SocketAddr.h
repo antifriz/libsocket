@@ -2,8 +2,8 @@
 // Created by ivan on 5/23/15.
 //
 
-#ifndef ZAVRSNI_SOCKETADDR_H
-#define ZAVRSNI_SOCKETADDR_H
+#ifndef _LIBSOCKET_SOCKETADDR_H
+#define _LIBSOCKET_SOCKETADDR_H
 
 #include <string>
 
@@ -78,4 +78,4 @@ private:
 };
 
 
-#endif //ZAVRSNI_SOCKETADDR_H
+#endif //_LIBSOCKET_SOCKETADDR_H

@@ -2,8 +2,8 @@
 // Created by ivan on 5/21/15.
 //
 
-#ifndef _SERIALIZATION_H
-#define _SERIALIZATION_H
+#ifndef _LIBSOCKET_SERIALIZATION_H
+#define _LIBSOCKET_SERIALIZATION_H
 
 #include "libsocket/core/network_typedefs.h"
 
@@ -56,4 +56,4 @@ public:
 
 };
 
-#endif //_SERIALIZATION_H
+#endif //_LIBSOCKET_SERIALIZATION_H

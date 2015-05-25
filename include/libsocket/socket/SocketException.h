@@ -2,8 +2,8 @@
 // Created by ivan on 5/22/15.
 //
 
-#ifndef ZAVRSNI_SOCKETEXCEPTION_H
-#define ZAVRSNI_SOCKETEXCEPTION_H
+#ifndef _LIBSOCKET_SOCKETEXCEPTION_H
+#define _LIBSOCKET_SOCKETEXCEPTION_H
 
 #include <string>
 
@@ -15,4 +15,4 @@ public:
     SocketException(int err_num, std::string const &msg) : mystd::exception(err_num, msg) { }
 };
 
-#endif //ZAVRSNI_SOCKETEXCEPTION_H
+#endif //_LIBSOCKET_SOCKETEXCEPTION_H

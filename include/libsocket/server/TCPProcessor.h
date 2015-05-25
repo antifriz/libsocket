@@ -2,11 +2,11 @@
 // Created by ivan on 5/23/15.
 //
 
-#ifndef ZAVRSNI_TCPPROCESSOR_H
-#define ZAVRSNI_TCPPROCESSOR_H
+#ifndef _LIBSOCKET_TCPPROCESSOR_H
+#define _LIBSOCKET_TCPPROCESSOR_H
 
 
-#include <IWCxx/socket/Socket.h>
+#include <libsocket/socket/Socket.h>
 class TCPServer;
 
 class TCPProcessor {
@@ -32,4 +32,4 @@ private:
 #include "TCPServer.h"
 
 
-#endif //ZAVRSNI_UDPPROCESSOR_H
+#endif //_LIBSOCKET_UDPPROCESSOR_H

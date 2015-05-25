@@ -2,8 +2,8 @@
 // Created by ivan on 5/23/15.
 //
 
-#ifndef ZAVRSNI_TCPSERVER_H
-#define ZAVRSNI_TCPSERVER_H
+#ifndef _LIBSOCKET_TCPSERVER_H
+#define _LIBSOCKET_TCPSERVER_H
 
 #include "Server.h"
 
@@ -30,4 +30,4 @@ public:
 #include "TCPProcessor.h"
 
 
-#endif //ZAVRSNI_TCPSERVER_H
+#endif //_LIBSOCKET_TCPSERVER_H

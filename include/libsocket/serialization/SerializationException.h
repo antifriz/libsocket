@@ -3,8 +3,8 @@
 //
 
 
-#ifndef PROJECT_SERIALIZATIONEXCEPTION_H
-#define PROJECT_SERIALIZATIONEXCEPTION_H
+#ifndef _LIBSOCKET_SERIALIZATIONEXCEPTION_H
+#define _LIBSOCKET_SERIALIZATIONEXCEPTION_H
 #include <mystl/exception.h>
 
 class SerializationException:public mystd::exception{
@@ -13,4 +13,4 @@ public:
 
 };
 
-#endif //PROJECT_SERIALIZATIONEXCEPTION_H
+#endif //_LIBSOCKET_SERIALIZATIONEXCEPTION_H
