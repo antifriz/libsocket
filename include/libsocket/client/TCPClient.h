@@ -2,8 +2,8 @@
 // Created by ivan on 5/23/15.
 //
 
-#ifndef ZAVRSNI_TCPSERVER_H
-#define ZAVRSNI_TCPSERVER_H
+#ifndef ZAVRSNI_TCPCLIENT_H
+#define ZAVRSNI_TCPCLIENT_H
 
 #include "Client.h"
 
@@ -22,4 +22,4 @@ public:
 };
 
 
-#endif //ZAVRSNI_TCPSERVER_H
+#endif //ZAVRSNI_TCPCLIENT_H

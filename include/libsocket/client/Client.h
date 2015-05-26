@@ -2,8 +2,8 @@
 // Created by ivan on 5/22/15.
 //
 
-#ifndef ZAVRSNI_SERVER_H
-#define ZAVRSNI_SERVER_H
+#ifndef ZAVRSNI_CLIENT_H
+#define ZAVRSNI_CLIENT_H
 
 #include <sstream>
 #include <stdlib.h>
@@ -16,7 +16,6 @@ class Client {
 public:
     Client(std::string address,std::string port, bool isTCP, int ai_family) try : socket_(
             Socket::create(address.c_str(), port, isTCP, ai_family)),pid_(getpid()) {
-        socket_.bind();
         socket_.connect();
     } catch (SocketException &s) {
         s.append_msg("Server::client");
@@ -55,4 +54,4 @@ private:
 };
 
 
-#endif //ZAVRSNI_SERVER_H
+#endif //ZAVRSNI_CLIENT_H

@@ -11,8 +11,8 @@
 #include <string>
 #include <libsocket/core/network_typedefs.h>
 #include "SocketAddr.h"
-
 #define MAX_BUFFER_SIZE 1000
+
 
 
 class Socket {
@@ -53,10 +53,10 @@ public:
 
     ssize_t send_to(const Bytes &bytes, const SocketAddr &client) const;
 
-    Bytes recv() const;
+    Bytes recv(size_t size = MAX_BUFFER_SIZE-1) const;
 
 
-    Bytes recv_from(SocketAddr &client) const;
+    Bytes recv_from(SocketAddr &client,size_t size = MAX_BUFFER_SIZE-1) const;
 
     bool can_read(long max_wait_sec=0, long max_wait_usec=0) const;
 

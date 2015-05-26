@@ -210,22 +210,22 @@ ssize_t Socket::send_to(const Bytes &bytes, const SocketAddr &client) const {
     return status;
 }
 
-Bytes Socket::recv() const {
-    Byte buffer[MAX_BUFFER_SIZE];
+Bytes Socket::recv(size_t size) const {
+    Byte buffer[size+1];
 
-    ssize_t status = ::recv(sockfd_, buffer, MAX_BUFFER_SIZE, 0);
+    ssize_t status = ::recv(sockfd_, buffer, size, 0);
     if (status < 0)
         throw SocketException(errno, "Socket::recv");
     return Bytes(buffer, buffer + status);
 }
 
-Bytes Socket::recv_from(SocketAddr &client) const {
-    Byte buffer[MAX_BUFFER_SIZE];
+Bytes Socket::recv_from(SocketAddr &client,size_t size) const {
+    Byte buffer[size+1];
 
     struct sockaddr_storage addr;
     socklen_t addr_len = sizeof addr;
     errno = 0;
-    ssize_t status = ::recvfrom(sockfd_, buffer, MAX_BUFFER_SIZE - 1, 0, (sockaddr *) &addr, &addr_len);
+    ssize_t status = ::recvfrom(sockfd_, buffer, size, 0, (sockaddr *) &addr, &addr_len);
     if (status < 0)
         throw SocketException(errno, "Socket::recv_from");
 
@@ -247,13 +247,18 @@ bool Socket::can_read(long max_wait_sec, long max_wait_usec) const {
     tv.tv_sec = max_wait_sec;
     tv.tv_usec = max_wait_usec;
 
+    int sfd = sockfd();
+
     FD_ZERO(&readfds);
-    FD_SET(sockfd(), &readfds);
+    FD_SET(sfd, &readfds);
 
+    errno= 0;
     // don't care about writefds and exceptfds:
-    select(sockfd() + 1, &readfds, NULL, NULL, &tv);
+    int retval = select(sfd + 1, &readfds, NULL, NULL, &tv);
+    if(retval<0)
+        throw SocketException(errno, "Socket::can_read");
 
-    return FD_ISSET(sockfd(), &readfds);
+    return FD_ISSET(sfd, &readfds);
 }
 
 void Socket::set_sockfd(int sockfd) {
