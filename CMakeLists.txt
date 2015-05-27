@@ -17,5 +17,5 @@ external-deps/mystl/include
 set(CMAKE_CXX_COMPILER g++)
 
 
-add_library(libsocket STATIC ${SOURCE_FILES})
-target_link_libraries(libsocket mystl)
+add_library(socket STATIC ${SOURCE_FILES})
+target_link_libraries(socket mystl)
