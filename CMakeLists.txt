@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(libsocket)
+project(socket)
 
 FILE(GLOB SOURCE_FILES
 src/serialization/*.cc
